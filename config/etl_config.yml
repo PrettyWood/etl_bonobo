@@ -1,0 +1,50 @@
+---
+DATA_SOURCES:
+- domain: dashboards
+  type: excel
+  file: dashboards.xls
+  sheet_name: Data
+#- domain: gsheets
+#  type: google_spreadsheet
+#  spreadsheet_id: 1IUnro5OfBv-PzWCl8hZ27FyX-ynoMcFmeid1WnIKmjM
+#  sheetname: test
+#  load: false
+- domain: lines1
+  type: csv
+  file: lines_1.csv
+- domain: lines2
+  type: csv
+  file: lines_2.csv
+
+PIPELINE:
+- input_domains: lines1
+  function_name: out_lines1
+  output_domains: aa
+- input_domains:
+  - lines2
+  - lines1
+  function_name: out_lines2
+  output_domains:
+  - aaa
+  - bbb
+- input_domains: lines1
+  function_name: out_lines3
+  output_domains: zzzz
+- input_domains: lines2
+  function_name: out_lines4
+  output_domains:
+  - ygtd
+
+MONGO_INDEXES:
+  __DEFAULT__:
+  - domain
+  - version
+  - - domain
+    - subdomain
+  aaa:
+  - - domain
+    - subdomain
+    - version
+  bbb:
+  - - domain
+    - version
